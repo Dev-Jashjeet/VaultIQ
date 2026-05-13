@@ -16,7 +16,7 @@ const strPerson: string = localStorage.getItem("usersDetails")!;
 const Persons = JSON.parse(strPerson);
 const sPersonEmail = sessionStorage.getItem("loginemail");
 let Person!: user;
-let Expenses: Array<number> = [];
+let Expenses: Array<number> = [0,0,0,0,0,0,0,0,0,0,0,0];
 
 for(let user of Persons) {
     if(user.email === sPersonEmail) {
@@ -27,7 +27,9 @@ for(let user of Persons) {
 if(Person) {
     for(let exp of Person.transactions) {
         if(exp.type === "Expense") {
-            Expenses.push(exp.amount);
+            const D = new Date(exp.date);
+            const date: number = Number(D.getMonth());
+            Expenses[date] = (Expenses[date] || 0) +  exp.amount;
         }
     }
 }
@@ -40,13 +42,13 @@ const chart = new Chart(lineCanvas, {
     type: "line",
 
     data: {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 
         datasets: [
             {
                 label: "Monthly Expenses",
 
-                data: [5000, 7000, 4000, 9000, 6000, 11000],
+                data: Expenses,
 
                 borderColor: "#3b82f6",
 
@@ -54,13 +56,13 @@ const chart = new Chart(lineCanvas, {
 
                 fill: true,
 
-                tension: 0.15,
+                tension: 0,
 
                 borderWidth: 3,
 
                 pointBackgroundColor: "#3b82f6",
 
-                pointRadius: 5
+                pointRadius: 0,
             }
         ]
     },
