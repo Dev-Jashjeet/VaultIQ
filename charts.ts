@@ -1,16 +1,4 @@
-interface transaction {
-    readonly date: string,
-    readonly amount: number,
-    readonly type: "Income"|"Expense",
-}
-
-interface user {
-    readonly name: string,
-    readonly email: string,
-    readonly password: string,
-    readonly salary: number,
-    transactions: transaction[],
-}
+import type user from "./modules";
 
 const strPerson: string = localStorage.getItem("usersDetails")!;
 const Persons = JSON.parse(strPerson);
