@@ -1,8 +1,8 @@
-let email = document.querySelector("#email");
-let password = document.querySelector("#password");
+const email = document.querySelector("#email");
+const password = document.querySelector("#password");
 const button = document.querySelector(".login-btn");
-let emailPassError = document.querySelectorAll(".error-message");
-let loader = document.querySelector(".loader-cont");
+const emailPassError = document.querySelectorAll(".error-message");
+const loader = document.querySelector(".loader-cont");
 const hideShow = document.querySelector(".toggle-icon");
 ;
 button.addEventListener('click', (e) => {
