@@ -6,6 +6,7 @@
   <title>TrackDeck Dashboard</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="shortcut icon" href="assets/logo.png" type="image/x-icon">
   <link
     href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
     rel="stylesheet"
@@ -32,17 +33,17 @@
       </div>
 
       <nav class="nav-links">
-        <a href="#" class="nav-item active">
+        <a class="nav-item active">
           <i class="fa-solid fa-table-columns"></i>
           <span>Dashboard</span>
         </a>
 
-        <a href="#" class="nav-item">
+        <a class="nav-item">
           <i class="fa-regular fa-rectangle-list"></i>
           <span>Transactions</span>
         </a>
 
-        <a href="#" class="nav-item">
+        <a class="nav-item">
           <i class="fa-solid fa-chart-simple"></i>
           <span>Reports</span>
         </a>
@@ -64,7 +65,7 @@
     <main class="main-content">
 
       <!-- Topbar -->
-      <header class="topbar">
+      <header class="topbar common">
         <h1 class="userprofile">Welcome, Jashjeet!</h1>
 
         <button class="logout-btn theme-mode">
@@ -83,7 +84,7 @@
       </header>
 
       <!-- Cards -->
-      <section class="summary-cards">
+      <section class="summary-cards common">
         <div class="card balance-card">
           <div class="card-top">
             <div class="card-icon blue">
@@ -126,7 +127,7 @@
       </section>
 
       <!-- Add Transaction -->
-      <section class="panel add-transaction">
+      <section class="panel add-transaction common">
         <h2>Add New Transaction</h2>
 
         <div class="form-row">
@@ -160,12 +161,12 @@
 
       <!-- Transactions -->
       <section class="transactions-section">
-        <div class="section-head">
+        <div class="section-head common">
           <h2>Recent Transactions</h2>
-          <a style="cursor: pointer;">View All</a>
+          <a class="viewAll" style="cursor: pointer;">View all</a>
         </div>
 
-        <div class="panel table-panel">
+        <div class="panel table-panel tablecommon">
           <table>
             <thead>
               <tr>
@@ -185,44 +186,18 @@
       </section>
 
       <!-- Bottom Charts -->
-      <section class="bottom-grid">
+      <section class="bottom-grid common">
         <div class="panel chart-panel">
           <h2>Spending Overview</h2>
 
           <div class="fake-line-chart">
-            <div class="line-grid"></div>
-            <svg viewBox="0 0 600 220" preserveAspectRatio="none">
-              <polyline
-                points="20,170 110,130 200,125 290,75 380,90 470,45 560,55"
-                fill="none"
-                stroke="#7CFF9B"
-                stroke-width="4"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-            </svg>
-
-            <div class="x-axis">
-              <span>Week 1</span>
-              <span>Week 2</span>
-              <span>Week 3</span>
-              <span>Week 4</span>
-            </div>
+            <canvas id="lineChart"></canvas>
           </div>
         </div>
 
         <div class="panel doughnut-panel">
-          <h2>Expense Breakdown</h2>
-
-          <div class="doughnut-wrapper">
-            <div class="legend">
-              <div><span class="dot blue-dot"></span> Food</div>
-              <div><span class="dot orange-dot"></span> Travel</div>
-              <div><span class="dot red-dot"></span> Bills</div>
-              <div><span class="dot purple-dot"></span> Other</div>
-            </div>
-
-            <div class="doughnut-chart"></div>
+          <h2>AI Suggestions (Beta)</h2>
+          <!-- Area where AI gives suggestions -->
           </div>
         </div>
       </section>
