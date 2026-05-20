@@ -109,6 +109,7 @@ body {
 .nav-item.active {
   background: rgba(84, 116, 255, 0.16);
   color: white;
+  cursor: pointer;
 }
 
 .sidebar-profile {
@@ -144,6 +145,7 @@ body {
 .main-content {
   flex: 1;
   padding: 28px;
+  display: block;
 }
 
 .topbar {
@@ -275,7 +277,7 @@ body {
   color: white;
   font-size: 16px;
   border-radius: 14px;
-  padding: 18px 25px;
+  padding: 18px 21px;
   font-family: inherit;
 }
 
@@ -295,6 +297,7 @@ body {
 }
 
 /* Transactions */
+
 .viewAll:hover {
   color: #6a97f0;
 }
@@ -316,7 +319,7 @@ body {
   font-weight: 500;
 }
 
-.table-panel {
+.table-panel, tablecommon {
   padding: 0;
   overflow: hidden;
   height: 365px;
@@ -401,74 +404,6 @@ td {
   justify-content: space-around;
   color: var(--text-soft);
   font-size: 15px;
-}
-
-/* Doughnut */
-.doughnut-wrapper {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  gap: 20px;
-  min-height: 300px;
-}
-
-.legend {
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  font-size: 20px;
-  color: #edf1ff;
-}
-
-.dot {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  display: inline-block;
-  margin-right: 10px;
-}
-
-.blue-dot {
-  background: #3b82f6;
-}
-
-.orange-dot {
-  background: #f59e0b;
-}
-
-.red-dot {
-  background: #ef4444;
-}
-
-.purple-dot {
-  background: #8b5cf6;
-}
-
-.doughnut-chart {
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  background: conic-gradient(
-    #3b82f6 0% 35%,
-    #f59e0b 35% 52%,
-    #ef4444 52% 74%,
-    #8b5cf6 74% 100%
-  );
-  position: relative;
-  flex-shrink: 0;
-}
-
-.doughnut-chart::before {
-  content: "";
-  position: absolute;
-  width: 105px;
-  height: 105px;
-  border-radius: 50%;
-  background: #111728;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: inset 0 0 20px rgba(0,0,0,0.25);
 }
 
 /* Responsive */
