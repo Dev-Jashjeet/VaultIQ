@@ -48,13 +48,4 @@ sidebarsButton[0].addEventListener("click", () => {
     click = false;
     return;
 });
-// Function when user click reports button on side bar
-sidebarsButton[2].addEventListener("click", () => {
-    for (let btns of sidebarsButton) {
-        btns.classList.remove("active");
-    }
-    sidebarsButton[2].classList.add("active");
-    // Function implementation left
-    return;
-});
 export {};
