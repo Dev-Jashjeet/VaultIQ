@@ -129,10 +129,12 @@ body {
   height: 48px;
   border-radius: 50%;
   object-fit: cover;
+  transition: all 0.3s ease;
 }
 
 .top-avatar img:hover {
   cursor: pointer;
+  transform: scale(1.1);
 }
 
 .sidebar-profile h4 {
