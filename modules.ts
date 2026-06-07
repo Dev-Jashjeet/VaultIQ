@@ -4,6 +4,7 @@ export default interface user {
     readonly password: string,
     readonly salary: number,
     photo?: string,
+    gemini_suggestions?: string[],
     transactions: transaction[],
 }
 
