@@ -20,3 +20,5 @@ Personal Finance Manager is a web-based application that helps users efficiently
 *** Makes module file of all interfaces
 *** Makes category section and done html and styling
 *** Photo section added
+*** LLM API integrated
+*** FINAL REVIEW DONE
