@@ -1,3 +1,4 @@
+import getData from "./geminiApi.js";
 import type { calData, income, transaction } from "./modules";
 import type user from "./modules";
 
@@ -17,7 +18,7 @@ function getUserData(): user {
     const usersDetails = JSON.parse(localStorage.getItem("usersDetails")!);
     for(const users of usersDetails) {
         if(users.email === loginUserEmail) {
-            return users
+            return users;
         }
     }
     throw new Error("User not found");
@@ -63,6 +64,7 @@ function getBMES(Person: user): void {
     }
     else {
         const calcExpense: calData = calcIncomeExpense(Person);
+        const response = getAIPrompt(calcExpense,Person);
         updateBMES(calcExpense);
     }
     return; 
@@ -80,6 +82,14 @@ function getBMES(Person: user): void {
             const photoURL = Person.photo;
             for(let ele of profilePic) {
             (ele as HTMLImageElement).src = Person.photo;
+        }
+    }
+    if(Person.gemini_suggestions) {
+        for(let data of Person.gemini_suggestions) {
+            const aiListLabel = document.querySelector(".list-cont")! as HTMLUListElement;
+             const list = document.createElement("li");
+            list.innerHTML = `${data}`;
+            aiListLabel.appendChild(list);
         }
     }
     return;
@@ -154,6 +164,10 @@ transactionBtn.addEventListener("click", (): void => {
         localStorage.setItem("usersDetails", JSON.stringify(usersDetails));
         // ---------< Area completed
 
+        // AI SUGGESTION
+        
+        updateAIRecommendation(Person);
+
         (AITD[0]! as HTMLInputElement).value = "";
         (AITD[1]! as HTMLInputElement).value = "Income / Expense";
         (AITD[2]! as HTMLInputElement).value = "Select Type";
@@ -224,7 +238,6 @@ body.addEventListener('click', (e): void => {
     const target = e.target as HTMLElement;
     if(target.classList.contains("delete-btn")) {
         const row = target.closest("tr")!;
-        console.log(row);
         
         const date = row.children[0]!.textContent!;
         const amount = row.children[1]!.textContent!;
@@ -256,6 +269,9 @@ function reEvaluate(Person: user,tempTransaction: transaction): void {
     Person.transactions = arr;
     getBMES(Person);
 
+    // ReUpdate gemini AI Suggestion
+    updateAIRecommendation(Person);
+
     // Local updation to Local Storage --->
     const usersDetails: user[] = JSON.parse(localStorage.getItem("usersDetails")!);
     for(const user of usersDetails) {
@@ -267,5 +283,63 @@ function reEvaluate(Person: user,tempTransaction: transaction): void {
     localStorage.setItem("usersDetails", JSON.stringify(usersDetails));
     // ---------< Area completed
 
+    return;
+}
+
+// Function to make prompt for gemini
+function getAIPrompt(data: calData, Person: user): string {
+    const prompt = `
+    Monthly Salary: ${Person.salary}
+    Total Income: ${data.totalIncome}
+    Total Expenditure: ${data.totalExpense}
+    Total Balance Remaining: ${Math.abs(data.totalBalance)}
+
+    Give exactly one financial recommendation that is something based on target like you have
+    you have to do this in a particular day and in upcomming week, also you can consider to 
+    give advice to save how much persentage to go to that target in 5-7 words with words based on salary,
+    income, expenditure, balance remaining only. Also add some attractive emojis in between the text that looks attractive`;
+    return prompt;
+}
+
+// Function to call Gemini API
+async function updateAIRecommendation(Person: user): Promise<void> {
+    const moneyData = calcIncomeExpense(Person);
+    const prompt = getAIPrompt(moneyData,Person);
+    const response = await getData(prompt);
+    if(response !== null) {
+        aiSuggestionList(response);
+    }
+    return;
+}
+
+// Function to add List on gemini AI (Beta) container
+function aiSuggestionList(response: string): void {
+    const aiListLabel = document.querySelector(".list-cont")! as HTMLUListElement;
+    const list = document.createElement("li");
+    list.innerHTML = `${response}`;
+    aiListLabel.prepend(list);
+
+    // Adding text into array
+    if(!Person.gemini_suggestions) {
+        const arr: string[] = [];
+        arr.unshift(response);
+        Person.gemini_suggestions = arr;
+    } else {
+        const arr: string[] = Person.gemini_suggestions;
+        if(arr.length >= 4) {
+            arr.pop();
+        }
+        arr.unshift(response);
+    }
+
+    //Adding Local Storage
+    let usersDetails: user[] = JSON.parse(localStorage.getItem("usersDetails")!);
+    for(let user of usersDetails) {
+        if(user.email === Person.email) {
+            user.gemini_suggestions = Person.gemini_suggestions;
+            break;
+        }
+    }
+    localStorage.setItem("usersDetails", JSON.stringify(usersDetails));
     return;
 }
